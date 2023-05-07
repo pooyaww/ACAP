@@ -13,6 +13,7 @@ AIE_COMPILE_FLAGS = -v --stacksize=1024 --heapsize=1024 -Xchess=main:darts.xargs
 #AIE Simulator tools
 AIE_SIM = aiesimulator
 AIE_SIM_FLAGS = --pkg-dir=$(AIE_OUT_DIR) --i=. --online -wdb
+AIE_x86_FLAGS = --target=x86sim --include="src" --workdir=$(AIE_OUT_DIR)
 AIE_SIM_LOG = ./sim.log
 
 RM = rm -f
@@ -40,8 +41,11 @@ endif
 
 sim: .check_env_var ./libadf.a $(AIE_OUT_DIR)
 	-$(AIE_SIM) $(AIE_SIM_FLAGS) | tee $(AIE_SIM_LOG)
+
+x86: .check_env_var
+	-$(AIE_CC) $(AIE_x86_FLAGS) $(AIE_GRAPH_FILES)  | tee $(AIE_SIM_LOG)
 clean:
-	$(RMDIR) $(AIE_OUT_DIR) ./aiesim* ./ess* ./profile*
+	$(RMDIR) $(AIE_OUT_DIR) ./aiesim* ./ess* ./profile* ./x86*
 	$(RM) ./libadf.a *.log *.csv *.db pl_sample_counts *.wdb *.wcfg *.vcd 
 	
 

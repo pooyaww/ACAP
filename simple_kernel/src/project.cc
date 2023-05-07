@@ -12,7 +12,8 @@ public:
         in = adf::input_plio::create(adf::plio_32_bits, "data/input0.txt");
         save = adf::kernel::create(aie_save);
 
-	adf::connect<adf::stream> net0(in.out[0], save.in[0]);
+	//adf::connect<adf::stream> net0(in.out[0], save.in[0]);
+	adf::connect<adf::stream> (in.out[0], save.in[0]);
 
 	//adf::source(save) = "project.cc";
 
