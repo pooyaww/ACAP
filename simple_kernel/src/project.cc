@@ -1,5 +1,5 @@
 #include <adf.h>
-
+#define iter_num 4
 void aie_save(input_stream_int32* in);
 
 class simpleGraph : public adf::graph {
@@ -27,8 +27,11 @@ simpleGraph mygraph;
 
 int main(void) {
   mygraph.init();
-  mygraph.run(4);
+  std::cout << "Graph initialized" <<std::endl;
+  mygraph.run(iter_num);
+  std::cout << "Graph executed " << iter_num << " times"<< std::endl;
   mygraph.end();
+  std::cout << "Graph end." <<std::endl;
   return 0;
 }
 
