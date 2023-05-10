@@ -41,6 +41,7 @@ public:
 simpleGraph mygraph;
 
 int main(void) {
+    adf::return_code ret;
 
     std::ifstream input_file(IN_FILE_ADR);
     std::string in_line;
@@ -56,9 +57,17 @@ int main(void) {
 
     mygraph.init();
     std::cout << "Graph initialized" <<std::endl;
-    mygraph.run(iter_num);
+    ret = mygraph.run(iter_num);
+    if (ret != adf::ok) {
+        std::cout << "Run failed\n";
+	return ret;
+    }
     std::cout << "Graph executed " << iter_num << " times"<< std::endl;
-    mygraph.end();
+    ret = mygraph.end();
+    if (ret != adf::ok) {
+        std::cout << "End failed\n";
+	return ret;
+    }
     std::cout << "Graph end." <<std::endl;
 
     std::string out_line;
