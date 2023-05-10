@@ -1,1 +1,1 @@
-# ACAP
+# ACAP (Adaptive SoC)
