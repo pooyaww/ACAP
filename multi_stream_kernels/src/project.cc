@@ -9,6 +9,14 @@
 #define OUT_FILE_ADR "data/output.txt"
 #define X86_OUT_FILE_ADR "./x86simulator_output/data/output.txt"
 
+#if defined(__AIESIM__)
+  #define SIM_OUT_FILE_ADR "./aiesimulator_output/data/output.txt"
+#endif
+
+#if defined(__X86SIM__)
+    #define SIM_OUT_FILE_ADR "./x86simulator_output/data/output.txt"
+#endif
+
 void aie_read(input_stream_int32* in, output_stream_int32* out);
 void aie_write(input_stream_int32* in, output_stream_int32* out);
 
@@ -41,6 +49,8 @@ public:
 
 simpleGraph mygraph;
 
+#if defined(__AIESIM__) || defined(__X86SIM__)
+
 int main(void) {
     adf::return_code ret;
 
@@ -72,8 +82,9 @@ int main(void) {
     std::cout << "Graph end." <<std::endl;
 
     std::string out_line;
+
     std::string gold_line;
-    std::ifstream output_file(X86_OUT_FILE_ADR);
+    std::ifstream output_file(SIM_OUT_FILE_ADR);
     std::ifstream gold_file(GOLD_FILE_ADR);
 
     if(output_file.is_open()) {
@@ -99,3 +110,4 @@ int main(void) {
     }
     return 0;
 }
+#endif

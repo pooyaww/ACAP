@@ -49,7 +49,6 @@ class simpleGraph : public graph {
 
 simpleGraph mygraph;
 
-
 #if defined(__AIESIM__) || defined(__X86SIM__)
 
 int main(int argc, char** argv) {
