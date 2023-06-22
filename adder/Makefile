@@ -9,11 +9,10 @@ AIE_OUT_DIR = ./Work
 COMP_LOG_FILE_PATH = ./build.log
 # AIE compiler settings
 AIE_COMPILE_FLAGS = -v --stacksize=1024 --heapsize=1024 -Xchess=main:darts.xargs=-nb -include="$(XILINX_VITIS)/aietools/include" -include="$(XILINX_HLS)/include" -include="./" -include="./src" -include="./data" -target=hw   -platform=$(PLATFORM) -workdir=$(AIE_OUT_DIR) --Xpreproc=-D__AIESIM__
-
 #AIE Simulator tools
 AIE_SIM = aiesimulator
 AIE_SIM_FLAGS = --pkg-dir=$(AIE_OUT_DIR) --i=. --online -wdb
-AIE_x86_FLAGS = --target=x86sim --include="src" --workdir=$(AIE_OUT_DIR)  --Xpreproc=-D__X86SIM__
+AIE_x86_FLAGS = --target=x86sim --include="src" --workdir=$(AIE_OUT_DIR) --Xpreproc=-D__X86SIM__
 AIE_SIM_LOG = ./sim.log
 
 RM = rm -f

@@ -49,6 +49,9 @@ class simpleGraph : public graph {
 
 simpleGraph mygraph;
 
+
+#if defined(__AIESIM__) || defined(__X86SIM__)
+
 int main(int argc, char** argv) {
 
     adf::return_code ret;
@@ -82,7 +85,6 @@ int main(int argc, char** argv) {
 
     std::string out_line;
     std::string gold_line;
-    //std::ifstream output_file(X86_OUT_FILE_ADR);
     std::ifstream output_file(SIM_OUT_FILE_ADR);
     std::ifstream gold_file(GOLD_FILE_ADR);
 
@@ -109,3 +111,4 @@ int main(int argc, char** argv) {
     }
     return 0;
 }
+#endif
