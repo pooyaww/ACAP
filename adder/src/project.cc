@@ -10,10 +10,10 @@
 #define OUT_FILE_ADR "data/output.txt"
 
 
-//#define WINDOW
+#define WINDOW
 
 #ifdef WINDOW
-  #define CONNECTION window<2048 * sizeof(int)>
+  #define CONNECTION window<2048 * sizeof(int32_t)>
 #else
   #define CONNECTION stream
 #endif
@@ -81,15 +81,15 @@ int main(int argc, char** argv) {
     }
     input_file.close();
 
+#ifdef WINDOW
+    long int iter_num = 1;
+#else
     long int iter_num = sample_size/LANE_SIZE;
+#endif
 
     mygraph.init();
     std::cout << "Graph initialized" <<std::endl;
-#ifdef WINDOW 
-    ret = mygraph.run(1);
-#else
     ret = mygraph.run(iter_num);
-#endif
     if (ret != adf::ok) {
         std::cout << "Run failed\n";
 	return ret;
