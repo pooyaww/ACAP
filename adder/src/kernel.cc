@@ -14,26 +14,32 @@
 * under the License.
 */
 
+//TODO: move lane num and type tnd othe configs to a common config file
 #include <adf.h>
 #include "aie_api/aie.hpp"
 #include <aie_api/aie_adf.hpp>
 #include <aie_api/utils.hpp>
+#define LANE_SIZE 4
+#define WINDOW_SIZE 2048 //sample size, one iteration of graph is enough
+using TYPE = int32_t;
 
-void aie_adder_stream(input_stream<int32_t>* in0, input_stream<int32_t>* in1, output_stream<int32_t>* out) {
+void aie_adder_stream(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out) {
     //v4int32 a = readincr_v<4>(in0);
-    auto a = readincr_v4(in0);
+    //auto a = readincr_v4(in0);
+    auto a = readincr_v<LANE_SIZE>(in0);
     //v4int32 b = readincr_v4(in1);
-    auto b = readincr_v4(in1);
+    //auto b = readincr_v4(in1);
+    auto b = readincr_v<LANE_SIZE>(in1);
     //v4int32 c = operator+(a, b);
     auto c = operator+(a, b);
     //auto c = aie::add(a, b); // does not work on stream?
     writeincr(out, c);
 }
 
-void aie_adder_window(input_window<int32_t> *in0, input_window<int32_t> *in1, output_window<int32_t> *out) {
-    for (size_t i = 0; i < 2048/8; ++i) {
-        auto a = window_readincr_v<8>(in0);
-        auto b = window_readincr_v<8>(in1);
+void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_window<TYPE>* out) {
+    for (size_t i = 0; i < WINDOW_SIZE/LANE_SIZE; ++i) {
+        auto a = window_readincr_v<LANE_SIZE>(in0);
+        auto b = window_readincr_v<LANE_SIZE>(in1);
         auto res = aie::add(a, b);
         window_writeincr(out, res);
     }

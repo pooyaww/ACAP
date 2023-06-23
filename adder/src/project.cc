@@ -3,17 +3,19 @@
 #include <string>
 #include <fstream>
 
-#define LANE_SIZE 4
 #define GOLD_FILE_ADR "./data/golden.txt"
 #define IN0_FILE_ADR "data/input0.txt"
 #define IN1_FILE_ADR "data/input1.txt"
 #define OUT_FILE_ADR "data/output.txt"
 
+using TYPE = int32_t;
+#define LANE_SIZE 4
+#define WINDOW_SIZE 2048
 
 #define WINDOW
 
 #ifdef WINDOW
-  #define CONNECTION window<2048 * sizeof(int32_t)>
+  #define CONNECTION window<WINDOW_SIZE * sizeof(TYPE)>
 #else
   #define CONNECTION stream
 #endif
@@ -30,8 +32,8 @@
 
 using namespace adf;
 
-void aie_adder_stream(input_stream<int32_t>* in0, input_stream<int32_t>* in1, output_stream<int32_t>* out);
-void aie_adder_window(input_window<int32_t>* in0, input_window<int32_t>* in1, output_window<int32_t>* out);
+void aie_adder_stream(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out);
+void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_window<TYPE>* out);
 
 class simpleGraph : public graph {
    private:
@@ -42,6 +44,8 @@ class simpleGraph : public graph {
     output_plio pl_out;
 
     simpleGraph() {
+
+
 #ifdef WINDOW
     	adder = kernel::create(aie_adder_window);
         source(adder) = "kernel.cc";
@@ -82,7 +86,7 @@ int main(int argc, char** argv) {
     input_file.close();
 
 #ifdef WINDOW
-    long int iter_num = 1;
+    long int iter_num = sample_size/WINDOW_SIZE;
 #else
     long int iter_num = sample_size/LANE_SIZE;
 #endif
@@ -111,7 +115,7 @@ int main(int argc, char** argv) {
         long int sample_num;
         while(std::getline(output_file, out_line)) {
 	    out_line.erase(std::remove(out_line.begin(), out_line.end(), ' '), out_line.end());
-            if (gold_file.is_open()){
+            if (gold_file.is_open()) {
                 std::getline(gold_file, gold_line);
             } else {
                 std::cerr << "cannot open gold.txt!";
