@@ -3,12 +3,22 @@
 #include <string>
 #include <fstream>
 
-
 #define LANE_SIZE 4
 #define GOLD_FILE_ADR "./data/golden.txt"
 #define IN0_FILE_ADR "data/input0.txt"
 #define IN1_FILE_ADR "data/input1.txt"
 #define OUT_FILE_ADR "data/output.txt"
+
+
+//#define WINDOW
+
+#ifdef WINDOW
+  #define CONNECTION window<2048 * sizeof(int)>
+#else
+  #define CONNECTION stream
+#endif
+
+
 
 #if defined(__AIESIM__)
   #define SIM_OUT_FILE_ADR "./aiesimulator_output/data/output.txt"
@@ -20,7 +30,8 @@
 
 using namespace adf;
 
-void aie_adder(input_stream_int32* in0, input_stream_int32* in1, output_stream_int32* out);
+void aie_adder_stream(input_stream<int32_t>* in0, input_stream<int32_t>* in1, output_stream<int32_t>* out);
+void aie_adder_window(input_window<int32_t>* in0, input_window<int32_t>* in1, output_window<int32_t>* out);
 
 class simpleGraph : public graph {
    private:
@@ -31,17 +42,22 @@ class simpleGraph : public graph {
     output_plio pl_out;
 
     simpleGraph() {
-        adder = kernel::create(aie_adder);
+#ifdef WINDOW
+    	adder = kernel::create(aie_adder_window);
+        source(adder) = "kernel.cc";
+#else
+    	adder = kernel::create(aie_adder_stream);
+        source(adder) = "kernel.cc";
+#endif
 
         pl_in0 = input_plio::create("DataIn0", adf::plio_32_bits, IN0_FILE_ADR);
         pl_in1 = input_plio::create("DataIn1", adf::plio_32_bits, IN1_FILE_ADR);
         pl_out = output_plio::create("DataOut", adf::plio_32_bits, OUT_FILE_ADR);
 
-	connect<stream> net0(pl_in0.out[0], adder.in[0]);
-        connect<stream> net1(pl_in1.out[0], adder.in[1]);
-        connect<stream> net2(adder.out[0], pl_out.in[0]);
+	connect<CONNECTION> net0(pl_in0.out[0], adder.in[0]);
+        connect<CONNECTION> net1(pl_in1.out[0], adder.in[1]);
+        connect<CONNECTION> net2(adder.out[0], pl_out.in[0]);
 
-        source(adder) = "kernel.cc";
 
         runtime<ratio>(adder) = 0.1;
     };
@@ -65,11 +81,15 @@ int main(int argc, char** argv) {
     }
     input_file.close();
 
-    long int iter_num = sample_size/4;
+    long int iter_num = sample_size/LANE_SIZE;
 
     mygraph.init();
     std::cout << "Graph initialized" <<std::endl;
+#ifdef WINDOW 
+    ret = mygraph.run(1);
+#else
     ret = mygraph.run(iter_num);
+#endif
     if (ret != adf::ok) {
         std::cout << "Run failed\n";
 	return ret;
