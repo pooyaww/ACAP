@@ -15,10 +15,16 @@
 */
 
 #include <adf.h>
+#include "aie_api/aie.hpp"
+#include <aie_api/aie_adf.hpp>
+#include <aie_api/utils.hpp>
 
-void aie_adder(input_stream_int32* in0, input_stream_int32* in1, output_stream_int32* out) {
-    v4int32 a = readincr_v4(in0);
-    v4int32 b = readincr_v4(in1);
-    v4int32 c = operator+(a, b);
-    writeincr_v4(out, c);
+void aie_adder(input_stream<int32_t>* in0, input_stream<int32_t>* in1, output_stream<int32_t>* out) {
+    //v4int32 a = readincr_v<4>(in0);
+    auto a = readincr_v4(in0);
+    //v4int32 b = readincr_v4(in1);
+    auto b = readincr_v4(in1);
+    //v4int32 c = operator+(a, b);
+    auto c = operator+(a, b);
+    writeincr(out, c);
 }

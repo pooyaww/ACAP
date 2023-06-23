@@ -37,7 +37,7 @@ class simpleGraph : public graph {
         pl_in1 = input_plio::create("DataIn1", adf::plio_32_bits, IN1_FILE_ADR);
         pl_out = output_plio::create("DataOut", adf::plio_32_bits, OUT_FILE_ADR);
 
-        connect<stream> net0(pl_in0.out[0], adder.in[0]);
+	connect<stream> net0(pl_in0.out[0], adder.in[0]);
         connect<stream> net1(pl_in1.out[0], adder.in[1]);
         connect<stream> net2(adder.out[0], pl_out.in[0]);
 
