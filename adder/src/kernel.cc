@@ -26,7 +26,7 @@ void aie_adder_stream(input_stream<int32_t>* in0, input_stream<int32_t>* in1, ou
     auto b = readincr_v4(in1);
     //v4int32 c = operator+(a, b);
     auto c = operator+(a, b);
-    //auto c = aie::add(a, b);
+    //auto c = aie::add(a, b); // does not work on stream?
     writeincr(out, c);
 }
 
