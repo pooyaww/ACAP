@@ -43,8 +43,8 @@ sim: .check_env_var ./libadf.a $(AIE_OUT_DIR)
 
 x86: .check_env_var
 	-$(AIE_CC) $(AIE_x86_FLAGS) $(AIE_GRAPH_FILES)  | tee $(AIE_SIM_LOG)
-	@echo Executing x86 simulation...
-	@x86simulator
+	@echo Executing...
+	x86simulator
 clean:
 	$(RMDIR) $(AIE_OUT_DIR) ./aiesim* ./ess* ./profile* ./x86*
 	$(RM) ./libadf.a *.log *.csv *.db pl_sample_counts *.wdb *.wcfg *.vcd 
