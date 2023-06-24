@@ -2,15 +2,12 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "config.h"
 
 #define GOLD_FILE_ADR "./data/golden.txt"
 #define IN0_FILE_ADR "data/input0.txt"
 #define IN1_FILE_ADR "data/input1.txt"
 #define OUT_FILE_ADR "data/output.txt"
-
-using TYPE = int32_t;
-#define LANE_SIZE 4
-#define WINDOW_SIZE 2048
 
 #define WINDOW
 

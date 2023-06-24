@@ -19,9 +19,7 @@
 #include "aie_api/aie.hpp"
 #include <aie_api/aie_adf.hpp>
 #include <aie_api/utils.hpp>
-#define LANE_SIZE 4
-#define WINDOW_SIZE 2048 //sample size, one iteration of graph is enough
-using TYPE = int32_t;
+#include "config.h"
 
 void aie_adder_stream(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out) {
     //v4int32 a = readincr_v<4>(in0);
