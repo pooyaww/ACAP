@@ -64,11 +64,32 @@ void aie_adder_free_running_scalar(input_stream<TYPE>* in0, input_stream<TYPE>* 
 //        int32 a = *inIter1++; //readincr for vector of LANE_SIZE elements
 //        int32 b = *inIter2++;
 //        int32 c = aie::add(a, b);
-//        *outIter++ = c; //writeincr, check for c.to_vector<int32>(0)
+//        *outIter++ = c; //writeincr, check for c.to_vector<TYPE>(0)
 //    }
 //}
 
-//void aie_adder_circular_buffer_vector(input_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & in, output_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & out) {
+
+//void aie_adder_circular_buffer_vector(input_circular_buffer<TYPE, adf::extents<BUFFER_SIZE>>& in0, input_circular_buffer<TYPE, adf::extents<BUFFER_SIZE>>& in1, output_circular_buffer<TYPE, adf::extents<BUFFER_SIZE>>& out) {
+//    auto pIn0  = aie::begin_vector_random_circular<VECTOR_SIZE>(in0);
+//    auto pIn1  = aie::begin_vector_random_circular<VECTOR_SIZE>(in1);
+//    auto pOut  = aie::begin_vector_random_circular<VECTOR_SIZE>(out);
+//
+//    // Position the pointer at the end of the buffer
+//    pIn0 += BUFFER_SIZE/VECTOR_SIZE;
+//    pIn1 += BUFFER_SIZE/VECTOR_SIZE;
+//
+//    for (size_t i = 0; i < (BUFFER_SIZE/VECTOR_SIZE); ++i) {
+//        auto a = *pIn0++;
+//        auto b = *pIn1++;
+//        auto c = aie::add(a, b)
+//        *pOut++ = c;
+//    }
+//}
+//
+
+
+
+//void aie_copy_circular_buffer_vector(input_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & in, output_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & out) {
 //    auto pIn  = aie::begin_vector_random_circular<VECTOR_SIZE>(in);
 //    auto pOut = aie::begin_vector_random_circular<VECTOR_SIZE>(out);
 //
