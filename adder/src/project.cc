@@ -31,6 +31,7 @@ using namespace adf;
 
 void aie_adder_stream(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out);
 void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_window<TYPE>* out);
+void aie_adder_free_running_scalar(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out);
 //void aie_adder_buffer_scalar(input_buffer<TYPE>& __restrict in0, input_buffer<TYPE>& __restrict in1, output_buffer<TYPE>& __restrict out);
 
 class simpleGraph : public graph {
@@ -46,8 +47,10 @@ class simpleGraph : public graph {
 
 #if defined (WINDOW)
     	adder = kernel::create(aie_adder_window);
-#elif defined (STREAM) || defined(FREE)
+#elif defined (STREAM)
     	adder = kernel::create(aie_adder_stream);
+#elif defined (FREE)
+    	adder = kernel::create(aie_adder_free_running);
 #elif defined (BUFFER_SCALAR) 
     	adder = kernel::create(aie_adder_buffer_scalar);
 #elif defined (BUFFER_VECTORIZED)

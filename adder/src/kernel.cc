@@ -71,13 +71,30 @@ void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_w
 
 // Free-running kernels
 //only in stream method
-//void free_running_aie(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out) {
-//    while(true){//for(;;) is acceptable for C++
-//        int32 a = readincr(in0);
-//        int32 b = readincr(in1);
-//        chess_separator_scheduler();//make sure stream is flushed
-//        auto c = aie::add(a, b);
-//        writeincr(out, c);
-//        chess_separator_scheduler();//make sure stream is flushed
+void aie_adder_free_running_scalar(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out) {
+    while(true){//for(;;) is acceptable for C++
+        auto a = readincr(in0);
+        auto b = readincr(in1);
+        chess_separator_scheduler();//make sure stream is flushed
+        //auto c = aie::add(a, b); // only works on vector types?
+        //auto c = operator+(a, b);
+        auto c = a + b;
+        writeincr(out, c);
+        chess_separator_scheduler();//make sure stream is flushed
+    }
+}
+
+
+//void aie_adder_circular_buffer_vector(input_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & in, output_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & out) {
+//    auto pIn  = aie::begin_vector_random_circular<VECTOR_SIZE>(in);
+//    auto pOut = aie::begin_vector_random_circular<VECTOR_SIZE>(out);
+//
+//    // Position the pointer at the end of the buffer
+//    pIn += BUFFER_SIZE/VECTOR_SIZE;
+//    // Copies the input buffer onto the output buffer
+//    for (unsigned i=0; i<(BUFFER_SIZE/VECTOR_SIZE); i++) {
+//    *pOut++ = *pIn++;
 //    }
 //}
+
+
