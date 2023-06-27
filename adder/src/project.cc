@@ -29,9 +29,9 @@
 
 using namespace adf;
 
-void aie_adder_stream(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out);
-void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_window<TYPE>* out);
-void aie_adder_free_running_scalar(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out);
+void aie_adder_stream(input_stream<TYPE>*, input_stream<TYPE>*, output_stream<TYPE>*);
+void aie_adder_window(input_window<TYPE>*, input_window<TYPE>*, output_window<TYPE>*);
+void aie_adder_free_running_scalar(input_stream<TYPE>*, input_stream<TYPE>*, output_stream<TYPE>*);
 //void aie_adder_buffer_scalar(input_buffer<TYPE>& __restrict in0, input_buffer<TYPE>& __restrict in1, output_buffer<TYPE>& __restrict out);
 
 class simpleGraph : public graph {

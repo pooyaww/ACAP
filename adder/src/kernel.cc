@@ -42,6 +42,21 @@ void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_w
     }
 }
 
+// scalar free-running kernel
+//only in stream method
+void aie_adder_free_running_scalar(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out) {
+    while(true){//for(;;) is acceptable for C++
+        auto a = readincr(in0);
+        auto b = readincr(in1);
+        chess_separator_scheduler();//make sure stream is flushed
+        //auto c = aie::add(a, b); // only works on vector types?
+        //auto c = operator+(a, b);
+        auto c = a + b;
+        writeincr(out, c);
+        chess_separator_scheduler();//make sure stream is flushed
+    }
+}
+
 
 // from Vitis 2024.1
 //void aie_adder_buffer_scalar(input_buffer<TYPE, adf::extents<BUFFER_SIZE>>& __restrict in0, input_buffer<TYPE, adf::extents<BUFFER_SIZE>>& __restrict in1, output_buffer<TYPE, adf::extents<BUFFER_SIZE>>& __restrict out){
@@ -69,20 +84,6 @@ void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_w
 //}
 
 
-// Free-running kernels
-//only in stream method
-void aie_adder_free_running_scalar(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out) {
-    while(true){//for(;;) is acceptable for C++
-        auto a = readincr(in0);
-        auto b = readincr(in1);
-        chess_separator_scheduler();//make sure stream is flushed
-        //auto c = aie::add(a, b); // only works on vector types?
-        //auto c = operator+(a, b);
-        auto c = a + b;
-        writeincr(out, c);
-        chess_separator_scheduler();//make sure stream is flushed
-    }
-}
 
 
 //void aie_adder_circular_buffer_vector(input_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & in, output_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & out) {
