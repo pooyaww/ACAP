@@ -32,6 +32,7 @@ using namespace adf;
 void aie_adder_stream(input_stream<TYPE>*, input_stream<TYPE>*, output_stream<TYPE>*);
 void aie_adder_window(input_window<TYPE>*, input_window<TYPE>*, output_window<TYPE>*);
 void aie_adder_free_running_scalar(input_stream<TYPE>*, input_stream<TYPE>*, output_stream<TYPE>*);
+//void aie_adder_circular_buffer_vector(input_circular_buffer<TYPE, adf::extents<BUFFER_SIZE>>&, input_circular_buffer<TYPE, adf::extents<BUFFER_SIZE>>&, output_circular_buffer<TYPE, adf::extents<BUFFER_SIZE>>&) {
 //void aie_adder_buffer_scalar(input_buffer<TYPE>& __restrict in0, input_buffer<TYPE>& __restrict in1, output_buffer<TYPE>& __restrict out);
 
 class simpleGraph : public graph {
