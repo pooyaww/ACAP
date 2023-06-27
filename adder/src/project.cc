@@ -19,8 +19,6 @@
  #define METHOD 
 #endif
 
-
-
 #if defined(__AIESIM__)
   #define SIM_OUT_FILE_ADR "./aiesimulator_output/data/output.txt"
 #endif

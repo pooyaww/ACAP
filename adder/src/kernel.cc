@@ -63,7 +63,7 @@ void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_w
 //    for(int i = 0; i < BUFFER_SIZE/LANE_SIZE; ++i) chess_prepare_for_pipelining {
 //        int32 a = *inIter1++; //readincr for vector of LANE_SIZE elements
 //        int32 b = *inIter2++;
-//        int32 c = aie::add(a + b);
+//        int32 c = aie::add(a, b);
 //        *outIter++ = c; //writeincr, check for c.to_vector<int32>(0)
 //    }
 //}
@@ -71,11 +71,13 @@ void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_w
 
 // Free-running kernels
 //only in stream method
-//void free_running_aie(input_stream<TYPE>* in, output_stream<TYPE>* out) {
+//void free_running_aie(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out) {
 //    while(true){//for(;;) is acceptable for C++
-//        int32 tmp = readincr(in);
+//        int32 a = readincr(in0);
+//        int32 b = readincr(in1);
 //        chess_separator_scheduler();//make sure stream is flushed
-//        writeincr(out, tmp+1);
+//        auto c = aie::add(a, b);
+//        writeincr(out, c);
 //        chess_separator_scheduler();//make sure stream is flushed
 //    }
 //}
