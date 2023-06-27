@@ -14,7 +14,6 @@
 * under the License.
 */
 
-//TODO: move lane num and type tnd othe configs to a common config file
 #include <adf.h>
 #include "aie_api/aie.hpp"
 #include <aie_api/aie_adf.hpp>
