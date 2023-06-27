@@ -1,18 +1,3 @@
-/**
-* Copyright (C) 2019-2021 Xilinx, Inc
-*
-* Licensed under the Apache License, Version 2.0 (the "License"). You may
-* not use this file except in compliance with the License. A copy of the
-* License is located at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-* WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-* License for the specific language governing permissions and limitations
-* under the License.
-*/
 
 #include <adf.h>
 #include "aie_api/aie.hpp"
@@ -42,7 +27,7 @@ void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_w
     }
 }
 
-// scalar free-running kernel
+//scalar free-running kernel
 //only in stream method
 void aie_adder_free_running_scalar(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out) {
     while(true){//for(;;) is acceptable for C++
@@ -83,9 +68,6 @@ void aie_adder_free_running_scalar(input_stream<TYPE>* in0, input_stream<TYPE>* 
 //    }
 //}
 
-
-
-
 //void aie_adder_circular_buffer_vector(input_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & in, output_circular_buffer<cint16, adf::extents<BUFFER_SIZE>> & out) {
 //    auto pIn  = aie::begin_vector_random_circular<VECTOR_SIZE>(in);
 //    auto pOut = aie::begin_vector_random_circular<VECTOR_SIZE>(out);
@@ -97,5 +79,32 @@ void aie_adder_free_running_scalar(input_stream<TYPE>* in0, input_stream<TYPE>* 
 //    *pOut++ = *pIn++;
 //    }
 //}
+//
 
+////Circular Input Buffer
+//void k2(input_circular_buffer<int32, adf::extents<INPUT_SAMPLE_SIZE>, adf::margin<MARGIN_SIZE>> & in0, output_stream<int32> *out0) {
+//    auto in0Iter = aie::begin_circular(in0);
+//    for (int ind = 0; ind < (INPUT_SAMPLE_SIZE + MARGIN_SIZE); ++ind) {
+//        writeincr(out0, *in0Iter++);
+//    }
+//}
+//
 
+////Circular Output Buffer
+//void k1(input_stream<int32> *in0, output_circular_buffer<int32, adf::extents<OUTPUT_SAMPLE_SIZE>> & out0) {
+//    auto out0Iter = aie::begin_circular(out0);
+//    for (int ind = 0; ind < OUTPUT_SAMPLE_SIZE; ++ind) {
+//        *out0Iter++ = readincr(in0);
+//    }
+//}
+
+////Asynchronous Circular Buffer
+//void k3(input_async_circular_buffer<int32, adf::extents<adf::inherited_extent>, adf::margin<MARGIN_SIZE>> &in0, output_stream<int32> *out0) {
+//    in0.acquire();
+//    auto in0Iter = aie::begin_circular(in0);
+//    for (int ind = 0; ind < INPUT_SAMPLE_SIZE + MARGIN_SIZE; ++ind) {
+//        writeincr(out0, *in0Iter++);
+//    }
+//
+//    in0.release();
+//}

@@ -14,9 +14,9 @@
 #elif defined(STREAM)
   #define METHOD <stream>
 #elif defined (FREE)
- #define METHOD <>
+  #define METHOD <>
 #else //BUFFER
- #define METHOD 
+  #define METHOD 
 #endif
 
 #if defined(__AIESIM__)
