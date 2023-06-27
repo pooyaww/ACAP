@@ -47,7 +47,7 @@ x86: .check_env_var
 	x86simulator
 clean:
 	$(RMDIR) $(AIE_OUT_DIR) ./aiesim* ./ess* ./profile* ./x86*
-	$(RM) ./libadf.a *.log *.csv *.db pl_sample_counts *.wdb *.wcfg *.vcd 
+	$(RM) ./libadf.a *.log *.csv *.db pl_sample_counts pl_sample_count* *.wdb *.wcfg *.vcd 
 	
 
 incremental: ./libadf.a sim

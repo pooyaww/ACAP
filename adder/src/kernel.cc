@@ -43,3 +43,40 @@ void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_w
     }
 }
 
+
+// from Vitis 2024.1
+//void aie_adder_buffer_scalar(input_buffer<TYPE, adf::extents<BUFFER_SIZE>>& __restrict in0, input_buffer<TYPE, adf::extents<BUFFER_SIZE>>& __restrict in1, output_buffer<TYPE, adf::extents<BUFFER_SIZE>>& __restrict out){
+//    auto inIter1 = aie::begin(in0);
+//    auto inIter2 = aie::begin(in1);
+//    auto outIter = aie::begin(out);
+//    for(int i = 0; i < SAMPLE_SIZE ; ++i) {
+//        int32 a = *inIter1++; //readincr
+//        int32 b = *inIter2++;
+//        int32 c = a + b;
+//        *outIter++ = c; //writeincr
+//    }
+//}
+
+//void aie_adder_buffer_vector(input_buffer<TYPE, adf::extents<BUFFER_SIZE>>& __restrict in0, input_buffer<TYPE, adf::extents<BUFFER_SIZE>>& __restrict in1, output_buffer<TYPE, adf::extents<BUFFER_SIZE>>& __restrict out){
+//    auto inIter1 = aie::begin_vector<LANE_SIZE>(in0); //iterator for vector of LANE_SIZE elements
+//    auto inIter2 = aie::begin_vector<LANE_SIZE>(in1);
+//    auto outIter = aie::begin_vector<LANE_SIZE>(out);
+//    for(int i = 0; i < BUFFER_SIZE/LANE_SIZE; ++i) chess_prepare_for_pipelining {
+//        int32 a = *inIter1++; //readincr for vector of LANE_SIZE elements
+//        int32 b = *inIter2++;
+//        int32 c = aie::add(a + b);
+//        *outIter++ = c; //writeincr, check for c.to_vector<int32>(0)
+//    }
+//}
+
+
+// Free-running kernels
+//only in stream method
+//void free_running_aie(input_stream<TYPE>* in, output_stream<TYPE>* out) {
+//    while(true){//for(;;) is acceptable for C++
+//        int32 tmp = readincr(in);
+//        chess_separator_scheduler();//make sure stream is flushed
+//        writeincr(out, tmp+1);
+//        chess_separator_scheduler();//make sure stream is flushed
+//    }
+//}

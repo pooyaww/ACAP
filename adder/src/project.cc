@@ -9,12 +9,14 @@
 #define IN1_FILE_ADR "data/input1.txt"
 #define OUT_FILE_ADR "data/output.txt"
 
-#define WINDOW
-
-#ifdef WINDOW
-  #define CONNECTION window<WINDOW_SIZE * sizeof(TYPE)>
-#else
-  #define CONNECTION stream
+#if defined (WINDOW)
+  #define METHOD <window<WINDOW_SIZE * sizeof(TYPE)>>
+#elif defined(STREAM)
+  #define METHOD <stream>
+#elif defined (FREE)
+ #define METHOD <>
+#else //BUFFER
+ #define METHOD 
 #endif
 
 
@@ -31,6 +33,7 @@ using namespace adf;
 
 void aie_adder_stream(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out);
 void aie_adder_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_window<TYPE>* out);
+//void aie_adder_buffer_scalar(input_buffer<TYPE>& __restrict in0, input_buffer<TYPE>& __restrict in1, output_buffer<TYPE>& __restrict out);
 
 class simpleGraph : public graph {
    private:
@@ -43,21 +46,24 @@ class simpleGraph : public graph {
     simpleGraph() {
 
 
-#ifdef WINDOW
+#if defined (WINDOW)
     	adder = kernel::create(aie_adder_window);
-        source(adder) = "kernel.cc";
-#else
+#elif defined (STREAM) || defined(FREE)
     	adder = kernel::create(aie_adder_stream);
-        source(adder) = "kernel.cc";
+#elif defined (BUFFER_SCALAR) 
+    	adder = kernel::create(aie_adder_buffer_scalar);
+#elif defined (BUFFER_VECTORIZED)
+    	adder = kernel::create(aie_adder_buffer_vector);
 #endif
+        source(adder) = "kernel.cc";
 
         pl_in0 = input_plio::create("DataIn0", adf::plio_32_bits, IN0_FILE_ADR);
         pl_in1 = input_plio::create("DataIn1", adf::plio_32_bits, IN1_FILE_ADR);
         pl_out = output_plio::create("DataOut", adf::plio_32_bits, OUT_FILE_ADR);
 
-	connect<CONNECTION> net0(pl_in0.out[0], adder.in[0]);
-        connect<CONNECTION> net1(pl_in1.out[0], adder.in[1]);
-        connect<CONNECTION> net2(adder.out[0], pl_out.in[0]);
+	connect METHOD net0(pl_in0.out[0], adder.in[0]);
+        connect METHOD net1(pl_in1.out[0], adder.in[1]);
+        connect METHOD net2(adder.out[0], pl_out.in[0]);
 
 
         runtime<ratio>(adder) = 0.1;
@@ -82,9 +88,13 @@ int main(int argc, char** argv) {
     }
     input_file.close();
 
-#ifdef WINDOW
+#if defined (WINDOW)
     long int iter_num = sample_size/WINDOW_SIZE;
-#else
+#elif defined(BUFFER)
+    long int iter_num = sample_size/BUFFER_SIZE;
+#elif defined(FREE)
+    long int iter_num = -1;
+#else //STREAM
     long int iter_num = sample_size/LANE_SIZE;
 #endif
 
@@ -95,7 +105,10 @@ int main(int argc, char** argv) {
         std::cout << "Run failed\n";
 	return ret;
     }
-    std::cout << "Graph executed " << iter_num << " times"<< std::endl;
+    if (iter_num != -1)
+        std::cout << "Graph executed " << iter_num << " times"<< std::endl;
+    else
+        std::cout << "Free running kernels. Graph executes for any number of samples"<< std::endl;
     ret = mygraph.end();
     if (ret != adf::ok) {
         std::cout << "End failed\n";
