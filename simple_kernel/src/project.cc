@@ -12,9 +12,10 @@ public:
         in = adf::input_plio::create(adf::plio_32_bits, "data/input0.txt");
         save = adf::kernel::create(aie_save);
 
-	adf::connect<adf::stream> net0(in.out[0], save.in[0]);// OK!
-	//adf::connect<adf::stream> (in.out[0], save.in[0]);  // OK!
-	//adf::connect<adf::stream> (save.in[0], in.out[0]);  // the direction of the flow should alway be from OUT to IN, therefore this line is incorrect.
+	adf::connect<adf::stream> net0(in.out[0], save.in[0]);// OK.
+	//adf::connect<adf::stream> (in.out[0], save.in[0]);  // OK.
+	//adf::connect<adf::stream> net0(in, save.in[0]);  // Should work on the last version.
+	//adf::connect<adf::stream> (save.in[0], in.out[0]);  // Error! the direction of the flow should alway be from OUT to IN, therefore this line is incorrect.
 
 	//adf::source(save) = "project.cc";
 
