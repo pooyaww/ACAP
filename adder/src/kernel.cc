@@ -1,9 +1,10 @@
 
 #include <adf.h>
-#include "aie_api/aie.hpp"
 #include <aie_api/aie_adf.hpp>
+#include <aie_api/operators.hpp>
 #include <aie_api/utils.hpp>
 #include "config.h"
+using namespace aie::operators;
 
 void aie_adder_stream(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_stream<TYPE>* out) {
     //v4int32 a = readincr_v<4>(in0);
@@ -13,8 +14,10 @@ void aie_adder_stream(input_stream<TYPE>* in0, input_stream<TYPE>* in1, output_s
     //auto b = readincr_v4(in1);
     auto b = readincr_v<LANE_SIZE>(in1);
     //v4int32 c = operator+(a, b);
-    auto c = operator+(a, b);
-    //auto c = aie::add(a, b); // does not work on stream?
+    //auto c = operator+(a, b);
+    auto c = aie::add(a, b); // does not work on stream?
+    //auto c = a + b;
+    //auto c = 1 + b;
     writeincr(out, c);
 }
 
