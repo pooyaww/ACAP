@@ -1,0 +1,25 @@
+INFO: [aiecompiler 77-297] Cmd Line : /opt/xilinx/Vitis/2022.2/aietools/bin/unwrapped/lnx64.o/aiecompiler --target=x86sim --include=src --workdir=./Work --Xpreproc=-D__X86SIM__ ./src/project.cc 
+INFO: [aiecompiler 77-349] Starting Dataflow Frontend with input './src/project.cc'
+INFO: [aiecompiler 77-404] Executing Cmd: ${XILINX_VITIS_AIETOOLS}/tps/lnx64/gcc/bin/g++ -E -std=c++17 -D__ADF_FRONTEND__ -D__AIEARCH__=10 -D__X86SIM__ -I/opt/xilinx/Vitis/2022.2/aietools/include  -I .  -I src -I ${XILINX_HLS}/include ./src/project.cc > ./Work/temp/project.ii
+INFO: [aiecompiler 77-404] Executing Cmd: graph_preprocessor ./Work/temp/project.ii -o ./Work/temp/project.processed.ii -report-core-dump  -- -std=c++17  -ftemplate-depth=2048  -Wno-return-stack-address  -Wno-missing-declarations  -Wno-parentheses-equality  -Wno-shift-negative-value  
+INFO: [aiecompiler 77-404] Executing Cmd: ${XILINX_VITIS_AIETOOLS}/tps/lnx64/gcc/bin/g++  -std=c++17  -I .  ./Work/temp/project.processed.ii -o ./Work/temp/project.out -L /opt/xilinx/Vitis/2022.2/aietools/lib/lnx64.o -g -O0 -Wl,--unresolved-symbols=ignore-all  -Wno-return-stack-address  -Wno-missing-declarations  -lxv_meir_frontend  -lxv_adf_api_frontend 
+INFO: [aiecompiler 77-404] Executing Cmd: ./Work/temp/project.out -I src -workdir=./Work -aiearch=aie -log-level=1 --pl-axi-lite=0 --enable-multi-layer=0 --disable-dma-autostart=0 --enable-light-cdo=0
+INFO: [aiecompiler 77-404] Executing Cmd: aieir_be --time-passes=0  --disable-om-fifo-insertion=false  --logcfg-file=  --trace-plio-width=64  --aie2ipu-base-addr=1073741824  --pl-freq=0  --use-real-noc=true  --enable-light-cdo=false  --show-loggers=false  --fast-nonlinearfloats=false  --broadcast-enable-core=true  --high-performance=false  --multi-layer-opt=0  --kernel-address-location=false  --target=x86sim --swfifo-threshold=40  --single-mm2s-channel=false  --workdir=./Work  --exit-after=complete  --event-trace-config=  --test-iterations=-1  --stacksize=1024  --known-tripcount=false  --enable-core-processor-bus=false  --platform=  --event-trace-custom-config=  --disable-dma-cmd-alignment=false  --enable-ecc-scrubbing=true  --float-accuracy=fast --output-archive=libadf.a  --write-partitioned-file=true  --print-timer-multi-layer-ctrl=false  --schemafile=AIEGraphSchema.json  --disable-multirate=false  --include="src" --verify-switchconfig=true  --device=  --enable-peano-flow=false  --Xpreproc="-D__X86SIM__" --disable-multirate-analysis=false  --fastmath=false  --cpp-std=-std=c++17  --max-layer-ctrl-param-size=256  --enable-mapper-hints-constraints=false  --event-trace-advanced-mapping=0  --enable-reconfig=false  --compute-heapsize=true  --log-level=1  --aiesim-xrt-api=false  --evaluate-fifo-depth=false  --gen-graph-cleanup=false  --use-canonical-net-names=false  --event-trace-port=gmio --use-phy-shim=true  --print-timer-multi-layer-core=false  --xlopt=1  --graph-iterator-event=false  --pre-compile-kernels=false  --trace-aiesim-option=0  --aiearch=aie  --mapped-soln-udm=  --optimize-pktids=false  --no-init=false  --adf-api-log-level=2  --num-trace-streams=16  --aie-heat-map=false  --enable-partition=false  --phydevice=  --fast-floats=true  --quiet=false  --enable-multi-layer=false  --exec-timed=0  --pl-auto-restart=false  --routed-soln-udm=  --large-kernel-program=false  --enable-profiling=false  --runtime-opt=false  --disable-transform-merge-broadcast=false  --verbose=false  --use-async-rtp-locks=true  --repo-path=  --genArchive=false  --kernel-compile-replacement=  --pl-axi-lite=false  --event-trace-bounding-box=  --multi-layer-shim-dma-bandwidth=0  --heapsize=1024  --logical-arch=  --enable-reconfig-dma-autostart=false  --nodot-graph=false  --disable-dma-autostart=false  --disable-transform-broadcast-split=true  --frontend-warning=0 --frontend-critical-warning=0 -json ./Work/temp/project.json -sdf-graph ./src/project.cc
+INFO: [aiecompiler 77-5805] Run completed. Additional information can be found in:
+	Guidance: ./Work/reports/guidance.html
+
+INFO: [aiecompiler 77-5806] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command.
+	vitis_analyzer ./Work/project.aiecompile_summary
+ne with X86Sim Switch Configuration pass
+INFO: [aiecompiler 77-610] Performing x86Sim Graph Analysis
+INFO: [aiecompiler 77-600] Emitting x86Sim Code
+INFO: [aiecompiler 77-608] New x86Sim Code Generation Complete
+INFO: [aiecompiler 77-599] Building simulation executable
+INFO: [aiecompiler 77-404] Executing Cmd: make -j4 -C ./Work/pthread -f makefile all 
+INFO: [aiecompiler 77-4236] Adding hardware components under: ./Work/temp/hw.o  
+INFO: [aiecompiler 77-4237] Adding software components under: ./Work/temp/sw.o  
+INFO: [aiecompiler 77-4235] Adding emulation and config components under: ./Work/temp/cfg.o 
+INFO: [aiecompiler 77-3462] Deleting existing hand-off archive: libadf.a
+INFO: [aiecompiler 77-1086] Generating hand-off archive: libadf.a
+(WARNING:0, CRITICAL-WARNING:0, ERROR:0)
+Compilation Complete

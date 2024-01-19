@@ -1,0 +1,15 @@
+{
+  "files" : [
+  {
+    "name": "temp/project.json",
+    "type": "AIE_GRAPH",
+    "format": "JSON"
+  },
+  {
+    "name": "data/output.txt",
+    "type": "SIMULATOR_OUTPUT",
+    "format": "TEXT",
+    "node_name": "i3_pi0"
+  }
+]
+}

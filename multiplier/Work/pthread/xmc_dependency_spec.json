@@ -1,0 +1,14 @@
+{
+  "dependencies":
+    [
+      "PthreadSim.cpp.d",
+      "PthreadSimXmc.cpp.d",
+      "wrap_kernel.cc.d"
+    ],
+  "generated_sources":
+    [
+      "PthreadSim.cpp",
+      "PthreadSimXmc.cpp",
+      "wrap_kernel.cc"
+    ]
+}

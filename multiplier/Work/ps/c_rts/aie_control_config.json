@@ -1,0 +1,35 @@
+{
+    "schema_version": {
+        "major": "1",
+        "minor": "0",
+        "patch": "0"
+    },
+    "aie_metadata": {
+        "graphs": {
+            "graph0": {
+                "id": 0,
+                "name": "mygraph",
+                "pl_kernel_instance_names": []
+            }
+        },
+        "RTPs": {},
+        "GMIOs": {},
+        "PLIOs": {
+            "plio0": {
+                "id": 0,
+                "name": "mygraph.pl_in0",
+                "logical_name": "DataIn0"
+            },
+            "plio1": {
+                "id": 1,
+                "name": "mygraph.pl_in1",
+                "logical_name": "DataIn1"
+            },
+            "plio2": {
+                "id": 2,
+                "name": "mygraph.pl_out",
+                "logical_name": "DataOut"
+            }
+        }
+    }
+}
