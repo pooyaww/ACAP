@@ -1,0 +1,4 @@
+aietools : /opt/xilinx/Vitis/2022.2/aietools
+ERROR: [aiecompiler 77-4170] Unable to find specified platform : /xilinx_vck190_base_202120_1/xilinx_vck190_base_202120_1.xpfm
+(WARNING:0, CRITICAL-WARNING:0, ERROR:1)
+/opt/xilinx/Vitis/2022.2/aietools/bin/aiecompiler: line 83: kill: (-119957) - No such process
