@@ -1,0 +1,52 @@
+{
+    "inputs": [
+        {
+            "type": "plio",
+            "dataFile": "in.txt",
+            "dataWidth": "32",
+            "frequency": 0.0,
+            "hex": false,
+            "logicalName": "dd",
+            "direction": "input",
+            "index": 0,
+            "ports": [
+                {
+                    "portName": "in[0]",
+                    "qualifiedName": "cgra_dataflow.k_3309",
+                    "graphName": "cgra_dataflow",
+                    "graphType": "cgra_graph",
+                    "type": "stream",
+                    "elementType": "int32",
+                    "direction": "in",
+                    "blockSize": 0
+                }
+            ],
+            "qualifiedGraphPortAliasNames": []
+        }
+    ],
+    "outputs": [
+        {
+            "type": "plio",
+            "dataFile": "out.txt",
+            "dataWidth": "32",
+            "frequency": 0.0,
+            "hex": false,
+            "logicalName": "ss",
+            "direction": "output",
+            "index": 0,
+            "ports": [
+                {
+                    "portName": "out[0]",
+                    "qualifiedName": "cgra_dataflow.k_3309",
+                    "graphName": "cgra_dataflow",
+                    "graphType": "cgra_graph",
+                    "type": "stream",
+                    "elementType": "int32",
+                    "direction": "out",
+                    "blockSize": 0
+                }
+            ],
+            "qualifiedGraphPortAliasNames": []
+        }
+    ]
+}
