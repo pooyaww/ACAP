@@ -15,12 +15,18 @@
 include ../../common.mk
 
 # AIE compiler settings
+#AIE_FLAGS = -v -dataflow -include="$(XILINX_VITIS)/aietools/include" \
+#		-include="../src" -include="../data" \
+#		-target=hw -xlopt=0 \
+#		-platform=$(PLATFORM_REPO_PATHS)/$(PFM)/$(PFM).xpfm \
+#		-workdir=$(AIE_OUT_DIR)
+#
+
+
 AIE_FLAGS = -v -dataflow -include="$(XILINX_VITIS)/aietools/include" \
 		-include="../src" -include="../data" \
 		-target=hw -xlopt=0 \
-		-platform=$(PLATFORM_REPO_PATHS)/$(PFM)/$(PFM).xpfm \
 		-workdir=$(AIE_OUT_DIR)
-#
 # primary build targets
 #
 

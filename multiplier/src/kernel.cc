@@ -18,15 +18,27 @@ void aie_multiplier_stream(input_stream<TYPE>* in0, input_stream<TYPE>* in1, out
     auto c = aie::mul(a, b); // does not work on stream?
     auto c_vect = srs(c, 0);
     //auto c_vect = c.to_vector<TYPE>(0);
+    // write on stream interface can have _v4 but not _v<4> and probably has no effect on performance 
     writeincr(out, c_vect);
 }
 
+//alignas(32) TYPE coeff_int[16] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+TYPE coeff_int[16] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
 void aie_multiplier_window(input_window<TYPE>* in0, input_window<TYPE>* in1, output_window<TYPE>* out) {
     for (size_t i = 0; i < WINDOW_SIZE/LANE_SIZE; ++i) {
         auto a = window_readincr_v<LANE_SIZE>(in0);
         auto b = window_readincr_v<LANE_SIZE>(in1);
-        auto res = aie::mul(a, b); // does not work on stream?
+	//auto temp = aie::load_v<LANE_SIZE>(coeff_int);
+	auto temp = aie::load_v<LANE_SIZE>(coeff_int);
+	//auto temp2 = aie::load_v<8>(coeff_int);
+	//auto temp = aie::load_v((int32_t*)in0);
+	//auto temp = aie::load_v((int32_t*)in0);
+	//auto temp = aie::vector::insert(2, b);
+	//auto temp = a.insert(0, b);
+        auto res = aie::mul(a, b);
+        //auto res = aie::mul(a, temp);
         auto res_vect = srs(res, 0);
+	//aie::store_v(out, res_vect); // it seems load with LANE_SIZE does not exist
         window_writeincr(out, res_vect);
     }
 }
